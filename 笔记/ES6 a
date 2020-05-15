@@ -1,0 +1,220 @@
+Es6:
+
+EMCAScript(ECMA\ES)标准
+
+JavaScript是EMCAScript的一种
+
+---------------------------------------------------------------------------
+
+JS
+
+---------------------------------------------------------------------------
+
+ES6支持浏览器
+Chrome Safari FF3.5+ IE10+正式支持(9开始) 
+
+ES6新语法：
+1.变量/赋值
+  var      可以重复定义  不能限制修改  没有块级作用域
+  let      不能重复定义  变量         有块级作用域
+  const    不能重复定义  常量         有块级作用域
+
+  -------------------------------------------------------
+
+  解构赋值：
+    a.左右两边必须一致，结构一致
+    b.定义必须有初始值
+
+2.函数
+  箭头函数
+
+  function (参数，参数){      ---->        (参数，参数)=>{函数体}     ---->      参数=>需要return的表达式
+      函数体
+  }
+  
+  a.如果有且仅有一个参数 ()可以省略
+  b.如果函数体只有一句话，而且是return,{}可以省略
+
+  默认参数
+   function show(a=0,b=2){
+
+       //或者 如果a有传则是传的值 如果没有则默认45
+       a=a||45;
+   }
+
+  参数展开(剩余参数，参数展开) 
+    args仅用于接收剩余的参数  前面有多少个都可以 必须再参数列表最后
+    function show(a,...args){}
+
+    ...arr 等价于 arr  可展开一个数组
+    let arr=[1,2,3];
+    
+    let arr2 = [1,3,...arr,5,6];
+
+    arr2实际结果 [1,3, 1,2,3 ,5,6];
+
+3.数组/json
+    数组
+        map   映射
+            let aar = [60,70,60,20] 对应 [true,true,true,false]  及格线 一一对应 
+            let jigeArr =  arr.map(item=>item>=60);  参数可以是 item,index   index是索引
+
+        filter  过滤  过滤掉不要的数据 即过滤掉true的数据
+            let aar = [1,2,3,4,5];
+            let jishuAar = aar.filter(item=>item%2);
+        
+        forEach    遍历
+            arr.forEach(item=>item+=item;)
+
+        reduce    汇总  获取到一个结果值
+            算平均值 temp中间值
+            arr.reduce((temp,item,index)=>{
+                temp=temp+item;
+                if(index==arr.length-1){
+                    return temp/arr.length;
+                }
+                
+            });
+        
+        from   Array.from([array-like]) 可以把array-like 伪数组 转换成数组  
+            例如 获取很多个元素 它是一个HtmlContion  一个集合  需要转换成array才可以 使用上面的方法
+        
+    json
+        a.如果名字和值是一样的  可以不写
+            let [a,b]=[1,2];
+            let json={a,b}; //{a,b}相当于 {a:a,b:b}
+        
+        b.省略funciton
+            let json={
+                a:12,
+                b:3,
+                show:function (){
+                    alert(this.a+this.b);
+                }
+            };
+            json.show(); //会弹窗显示
+
+            可以省略function 写成
+                show(){
+                    ...
+                }
+
+4.字符串
+    字符串模板
+        let json={name='blue',age:18};
+        alert('我叫 ' + json.name + ' 年龄：' + json.age);
+
+        ``反单引号
+        alert(`我叫 ${json.name} 年龄：${json.age}`);
+        alert(`dwadadn`); //可以用空格直接换行  不用\n之类的符号
+
+        字符串.startsWith('213')  是否以213开头
+        字符串.endsWith('213')  是否以213结尾
+
+
+5.面向对象
+    传统js对象实现
+        function Person(name,age){ //定义类
+            this.name=name;
+            this.age=age;
+        }
+        Person.prototype.showName=function (){ //添加方法
+            alert(this.name);
+        };
+        let p = new Person("name",19); //new对象
+
+        function Worker(name ,age ,job){ //继承Person
+            Person.call(this,name,age);
+            this.job=job;
+        }
+        Worker.prototype=new Person();
+        Worker.prototype.constructor=Worker;
+        Worker.prototype.showJob=function (){
+            alert(this.job);
+        };
+        let w = new Worker('blue',12,'dwadadn');
+
+        w.showName(); //使用
+
+    ES6方式
+        //定义
+        class Person{
+            constructor(name,age){
+                this.name=name;
+                this.age=age;
+            }
+            
+            showName(){
+                alert(this.name);
+            }
+        }
+        
+        let p = new Person('blue',12);
+        p.showName();
+
+        //继承 继承了父类的属性和方法
+        class Worker extends Person{
+            constructor(name,age,job){
+                //super 超类(父类)
+                super(name,age);
+                this.job=job;
+            }
+
+            showJob(){
+                alert(this.job);
+            }
+
+            //内部类
+            class WE{
+                constructor(){
+
+                }
+
+                showWE(){
+                    alert('内部类');
+                }
+            }
+
+            let we = new WE();
+        }
+
+        let w=new Worker('blue',12,'ad');
+        w.showName();
+    
+    关于this
+        如果直接 document.onclick=p.showName();  此时this会赋予document 就找不到name
+        传统方式 document.onclick=function (){ p.showName(); }; 套一层function
+        ES6      document.onclick=p.showName.bind(p);
+
+        箭头函数: 取决于所在环境 全局就是 window  如果在谁的函数里就是谁 
+                 例如:document.onclick=function (){()=>{alert(this)}}; this就是document
+        普通函数：根据调用我的人 谁调用就是谁
+
+        箭头函数this优先级高于bind  同时存在 则this依然根据箭头函数决定
+
+6.Promise
+    把异步操作同步化  不是真的同步 仅写法像
+
+7.generator
+    生成器：
+
+8.ES7 async/await   8对7封装 7对6封装
+
+9.模块化
+    ES6自带模块化 目前浏览器不持支 需要打包 编译
+
+ES6 -> ES5 编译   babel
+打包              browserify
+
+
+变量提升 变量预解析
+    var a =12;
+    function show(){
+        alert(a);
+        var a = 5;
+    }
+
+    //此时alert 里的a 会找不到值  因为js会进行预解析  把定义都提升到最上面   
+        而函数里的变量会提升到函数最上层 即 var a;  a又在alert之后赋值 所以会没有值undefine
+        外层全局的则会提升至全局上层定义
+        let会存在预解析吗   同样存在 
