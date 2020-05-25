@@ -1,0 +1,180 @@
+数据交互
+    123 都是表单
+    1、表单                http数据请求其实都是表单
+    2、ajax                不用刷新 ajax默认不可跨域  服务器配合也可跨域
+    3、jsonp               跨域   安全性差  只能发起 get请求
+    4、webSocket           快  双向    跨域
+
+        对比
+        ajax       性能低   单向            跨域麻烦
+        webSocket  性能高   双向（双工）     默认跨域
+
+        单向：只能浏览器去请求服务器
+        双向：服务端有数据变化可通知客户端
+
+        跨域：跨越域名        域名、端口、协议 不同 就是不同域 或不同源
+            www.baidu.com/1.html  -> www.163.cn/1.txt
+            XSS
+
+            1、如果有多个域名 需要跨域
+            2、第三方数据交互 需要跨域
+
+            表单本身可跨域
+            ajax 跨域繁琐
+            jsonp 跨域有风险
+            webSocket 可跨域 安全
+    
+    安全性
+        1、系统安全性
+        2、代码---
+
+
+-----------------------------------------------------------------------------------------------
+
+http    1.0 1.1 2.0       容易被攻击
+https   security          安全
+
+http1.0               一次性连接
+http1.1                保持连接   性能提升
+http2.0(草案)
+    1、强制https
+    2、自带双向通信
+    3、协议多路复用
+
+
+RFC http 
+
+https 需要申请 证书
+
+
+1、三次握手 四次分手
+    客户端                                    服务器
+                1.客户端请求连接
+                2.服务器接受
+                3.客户端发送请求
+                4.服务器返回数据  然后断开
+
+2、http消息   
+    消息header <=32k        GET一般在header传送
+    消息body   <=1G         POST一般在body传送
+
+------------------------------------------------------------------------------------
+
+OSI 七层交换“参考”模型   实际用是五层(12347)
+    1、物理层        物理学家 通信工程 ---》材料 电压 光强 电流
+    2、链路层        内网寻址   ARP、ICMP
+    3、网络层        外网寻址   ip
+    4、传输层        通信稳定性  检查顺序 错误 丢失 之类  TCP
+    5、表现层        统一各种网络的结构   【已被传输层取代】
+    6、会话层        记录通信状态         【由应用层的协议决定是否记录状态】 
+    7、应用层        应用细节            HTTP(属于无状态通信)、FTP、SMTP、POP3
+
+    无状态通信：每次通信服务器都认为是第一次 不记录状态
+
+    TCP   传输控制协议          用于文件下载 聊天
+        1、丢失会重传  保证到达
+        2、错误会重发  保证质量
+        3、保证顺序
+        socket就是TCP协议
+        QQ是 基于UDP 但系统模拟的TCP
+        Http基于TCP
+
+    UDP   用户数据协议           对错误不敏感  对实时性很重的  情况 会使用 IP电话 视频直播等
+        1、不保证到达
+        2、不保证质量
+        3、不保证顺序
+------------------------------------------------------------------------------------
+
+对于服务器来说，区分不出来是 form 还是 ajax 还是jsonp  都是 基于form
+表单
+    1、属性
+        action   提交地址
+        method   方式  GET POST PUT HEADER DELETE... 还可自定义 与服务器配合
+        name      
+    2、数据提交方法
+        GET     数据放在URL里 整个url数据在32K以内     有缓存
+        POST    数据放在http-body 里面 body数据1G以内  不缓存
+        两种方式安全系数一样  https才能保障安全性
+
+        GET：相对来说 容量小 可见 有缓存   适合分享 收藏地址
+        POST: 容量大 不可见 无缓存
+    3、校验
+
+
+    ---------------------------------------------------------------------------------------------------------
+    表单：浏览器实现  更稳定  会跳转
+    ajax: js实现     用户体验好
+
+    表单重复提交
+     1、开始提交的时候  禁用submit
+     2、请求结束 打开submit
+
+
+    ajax
+
+    ajax内部实现
+    XMLHttpRequest 支持IE6以上
+    ActiveXObject('Microsoft.XMLHttp') IE6及以下
+
+    //连接
+    let request = new XMLHttpRequest();
+    //参数3 true：异步  false：同步  ajax 同步体验不好 基本被浏览器废弃 不建议使用 一般都是异步
+    request.open('GET','1.php?a=2',true);
+
+    //发送 ()放body数据
+    request.send();
+
+    //接收
+    //OnReadyStateChange  当通信状态变化
+    // 0 初始化 刚创建好  1  已连接   2  已发送  3  已接收头  4  已接收body
+
+    //status  http状态码
+    // 1** 消息 2** 成功 3** 重定向（301：永久重定向 浏览器会记录新地址 下次自动请求新地址 302：临时重定向 浏览器任然会先请求老地址）
+    // 304：也属于成功 重定向到硬盘 即缓存 客户端第二次请求同一数据 会告诉服务器 我上次请求的数据及时间，服务器对于请求同一套数据 会判断上次给客户端的数据到此是否修改 如果没有则 返回304 告诉客户端可以用你之前的
+    // 4** 客户端请求错误 5** 服务端错误 
+    request.onreadystatechange=function (){
+        if(request.status>=200&&request.status<300 || request.status==304){ //即成功
+            request.responseText 文本
+            request.responseXML xml数据
+
+        }
+    }
+
+    重定向： 给浏览器下命令 让浏览器去请求另一个地址 浏览器地址会变成新的
+    转发  ： 在服务器内部 把请求转交给另一个模块处理，对客户端不可见，浏览器地址不会改变
+
+    //设置请求头 content-type  POST
+    //在open之后
+    request.setRequestHeader('content-type','application/x-www-form-urlencoded');
+
+    //如果有这个success参数 就执行&&后面
+    success && success(参数);
+
+    //如果options是空的 就给一个空json {}
+    options = options || {};
+
+    //如果有JSON 并且有JSON.parse方法
+    if(window.JSON && JSON.parse){
+        data = JSON.parse(data);
+    }else{
+        data=eval('('str')');
+    }
+
+    content-type 
+        text/plain  纯文本
+        aoolication/x-222-form-urlencoded  &方式   urlencoded->url编码 比如 名字=值&年龄=值
+        multipart/form-data    定界符分割各个数据(文件上传)
+
+jsonp：就是创建了一个script标签 去用src引用一个外部数据
+    安全性问题--过于开放
+
+    encodeURIComponent(); uri编码
+
+ajax: cors跨域
+
+
+formData
+
+---------------------------------------------------------------------------------------------------------------
+
+后台

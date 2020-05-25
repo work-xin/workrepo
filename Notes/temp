@@ -1,0 +1,23 @@
+https://www.baidu.com/sugrec?&wd=acee&cb=show
+
+
+获得最新版的巧克力包装下载从https://chocolatey获得Chocolatey。
+org/api/w2/package/chocolatev/0。10.15。下载7-Zip命令行工具之前的提取。
+提取C:\Users ADNINT“1 ppdatallocal Templchocolateri chocInstall chocolatev.zip, 
+C:\Users\躺”1 appdatalloo1Temp 'chocolatey \ chocInstall…在机器上安装巧克力
+创建ChocolateyInstall作为一个环境变量(目标机器“将ChocolateyInstall设置为”
+c:\ProgramDatalchocolatey)警告:很可能在你使用choco之前，你需要关闭并重新打开你的shel]。
+限制管理员的写权限我们正在设置Chocolatey包存储库。
+包本身会转到' c:\ProgramDatalchocolatev\1ib'
+(例如C: \ ProgramData \ chocolateyllib \ yourPackageName命令行中的shim文件
+转到“C:\ProgramDatalchocolater\bin”并指向C:ProgramDatalchocolatewllibivourPackageNamei中的一个可执行文件
+如果不存在巧克力文件夹，则创建巧克力文件夹。警告:当从小于0.9.9的Chocolatey版本升级时，
+可以安全地忽略与丢失日志文件相关的错误。“批处理文件找不到”也可以忽略。
+svstem无法找到指定的文件—也是安全的chocolatev, 
+nupkg文件没有在lit中安装试图从引导程序找到它PATH环境变量中没有c:\ProgramDatalchocolatewsbin。
+添加....警告:不设置选项卡完成:用户概要文件不存在在C: \管理员\ \ WindowsPowerShell \ Microsoft文档。
+PowerShell.-profile。ps1巧克力色(乔科省。exe)现在准备好了。
+您可以通过键入choco从anwwhere、命令行或powershell调用choco。运行乔科省/ ?用于函数列表。在使用choco之前，
+您可能需要先关闭并重新启动powershell和/或控制台。确保chocolater命令位于确保chocolatey的路径上。
+mupkg在lib文件夹中巧克力 w0.10.15升级以下软件包:PythonVISUALSTUDIO2017-工作负载-Vctools通过升级，
+您可以接受包的许可。nwthon是mnt安装的。Tnstalling……进度:下载python3 3.8。3.88

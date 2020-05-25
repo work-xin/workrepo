@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function show(json){
+                let mul = document.getElementById('ul1');
+
+                mul.innerHTML="";
+                json.g=json.g||[]
+
+                json.g.forEach(element => {
+                    let mli = document.createElement('li');
+                    mli.innerHTML=element.q;
+                    mul.appendChild(mli);
+                });
+            }
+
+            window.onload=function (){
+                let text = document.getElementById('input1');
+
+                text.oninput=function (){
+                    let mscript = document.createElement('script');
+                    mscript.src=`https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=31655,1454,31669,21097,31111,31254,31590,31605,31271,31464,30823,26350&wd=${encodeURIComponent(text.value)}&cb=show`;
+                    document.head.appendChild(mscript);
+                }
+            }
+        </script>
+    </head>
+
+    <body>
+        <div>
+            <input id="input1" type="text"></input>
+            <ul id="ul1"></ul>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        window.onload = function () {
+            const $ = document.querySelectorAll.bind(document);
+            let div2 = $('.div1')[0];
+            alert("div2" + div2);
+            div2.onclick = function () {
+                alert("点击" + this);
+                this.style.background = "#ffffff";
+            }
+        }
+    </script>
+    <style>
+        .div1 {
+            width: 200px;
+            height: 200px;
+            color: blue;
+            background-color: chartreuse;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="div1">123</div>
+</body>
+
+</html>

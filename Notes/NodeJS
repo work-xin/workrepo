@@ -1,0 +1,124 @@
+后台-nodejs
+1、原生
+2、框架、库
+
+用处
+1、服务器--小型后台系统 、中间层
+2、工具：测试、构建（grunt、gulp、WebPack。。。）、抓取
+
+nodejs搭建web服务器
+    都要遵顼http协议才能互通
+    apache                       chrome
+    nginx                        ie
+    iis                          ff
+    node                         safari
+                                 opera
+
+运行NodeJS程序:
+1、盘符 d:
+2、进入目录  cd 目录
+3、运行      node xxx.js
+
+http模块
+    let server=http.createServer(()=>{
+        //有浏览器请求时执行的回调函数
+    });
+    server.listen(端口号);
+
+并发
+    nodejs和js一样的单线程 单进程
+    非阻塞异步交互
+
+中间层
+    安全性 性能 前台交互
+
+回调函数执行过程
+    socket.on('data',function (){
+        request=解析请求;
+        response=socket;
+
+        callback(request,response);
+    });
+
+
+favicon.ico 网站小图标
+
+--------------------------------------------------------------------------------
+1、系统模块
+2、服务器完成-http、fs、流操作
+3、WebSocket-socket.io
+4、formData=ajax2.0、文件上传、进度
+5、cors跨域
+---------------------------------------------------------------------------------
+
+深浅拷贝
+    浅复制    复制一层
+    深复制    复制所有东西
+
+    例如 复制一个数组 数组内容表面一层会被完全复制  但是 其中元素下还有一层其他内容 则不会跟着复制
+---------------------------------------------------------------------------------
+
+NodeJS
+
+http模块
+
+
+    Assertion Testing 断言测试
+    Buffer 处理二进制
+    File System 读写文件
+
+    多进程
+    Child Processes
+    Cluster
+    Process
+
+    Crypto  签名 (md5 sha)
+
+    http/https
+    http/2
+
+    OS  系统信息
+
+    Path
+
+    Events 事件队列  
+
+    Query Strings  解析问号后面的数据 返回json
+    URL 解析所有参数
+        url.parse('全地址',true); //true代表包含query也解析成json
+
+    网络
+    TCP    Net
+    UDP    UDP/Datagram
+
+    域名解析  根DNS服务器
+    DNS     dns.resolve('baidu.com',(err,data)=>{});  解析域名
+    Domain  处理域名一些相关的事情
+
+    流操作        连续的数据都是流---->视频流 网络流 文件流 语音流
+    Stream
+
+    TLS/SSL   加密 安全   https基于SSL   =  http+SSL
+
+    TTY   一个终端
+
+    ZLIB----->gz   压缩
+
+
+
+
+
+
+怎么加密最安全
+    一次一密  密钥长度>内容长度
+    RSA 目前运用比较广泛   非对称加密
+
+双层MD5
+    md5属于单向散列
+
+    md5(md5('123456')+'可以加一个自定义的字符串去混淆')
+
+进程 线程
+    1、进程 进程拥有独立空间 存储                     多进程：成本高 慢 安全(进程间隔离)  进程间通信麻烦，代码简单
+    2、线程 同一个进程内的所有线程共享一套空间 代码     多线程：成本低 快 不安全(线程间共享) 因为再同一个空间 线程间通信相对容易，代码复杂
+    3、纤程

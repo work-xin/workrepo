@@ -1,0 +1,147 @@
+2/3 是对1的封装
+1.promise
+2.generator
+3.async/await
+
+------------------------------------------------------------------------------
+
+同步 ---> 串行    一个一个操作来  上一个结束后 才开始第二个    简单方便
+异步 ---> 并发    可以同时进行                               性能高 体验好
+
+基础操作
+//异步
+$.ajax(
+    {
+        url: ' /banner_data',
+        success(banners){
+            //第二次请求
+            ...
+        },
+        error(){
+            alert('数据异常');
+        }
+    }
+);
+
+//同步
+let banners=$.ajax({url:'/banner_data'});
+let user=$.ajax({url:'/user_data'});
+
+
+
+promise                 解决异步操作    对于带逻辑 有后续异步操作的不适用
+    详细操作见html
+
+    //多个访问操作  里面可以放多个promise对象 then参数里两个函数里的参数也为一个数组
+    Promise.all(
+        [promise对象1，promise对象2]
+    ).then(
+        (json数组)=>{};
+        (err数组)=>{};
+    );
+
+    //ajax 返回的对象兼容promise   可以直接 ajax().then();
+
+    //promise多个访问写法
+    Promise.all([
+        #ajax(url:'.....'),
+        #ajax(url:'.....'),
+        #ajax(url:'.....')
+    ]).then(
+        (jsonArr)=>{},
+        (errArr)=>{}
+    );
+
+    Promise.all();     与：所有都成功
+    Promise.race();    或：只要有一个完成
+
+wapm 服务器怎么使用
+    访问需要网络地址
+    文件都放在www里面
+    路径转换 本地路径转换为网络路径才可访问    c:\wamp\www   ->      http://localhost/
+
+
+----------------------------------------------------------------------------------------------------------
+
+generator       生成器函数   箭头函数不可用
+    可暂停
+    //语法
+    function *show(){
+        aler('aaa');
+        yield;   //暂停  暂时放弃这个函数的执行  上下都不会执行
+        aler('bbb');
+    };
+
+    let gen = show(); //会返回一个generator对象
+
+    gen.next(); //执行aaa
+    gen.next(); //下一次调用next 执行bbb
+
+    yield
+        1、参数
+        2、返回
+
+    generator可以和promise配合
+        需要写一个辅助函数去执行，这样会导致大家不统一 不标准 性能低
+        generator函数不能用箭头函数
+
+--------------------------------------------------------------------------------------------------
+
+async/await    常用
+    语法
+    async function xxx(){
+        ...
+        let result = await xxx; //如果等的是一个异步操作才会有效果 xxx可以是任意值 包括 promise generator async 。。。
+        ...
+    }
+
+    ()(); //匿名 函数
+    async ()=>{
+        let a1 = await $.ajax();
+        let a2 = await $.ajax();
+        let a3 = await $.ajax();
+    };
+
+    (async ()=>{
+        try{
+            let a1 = await $.ajax();
+            let a2 = await $.ajax();
+            let a3 = await $.ajax();
+        }catch(e){
+            //捕获异常
+
+            //throw new Error('可以抛出异常');
+        }
+        
+    })();
+
+
+    -----------------------------------------------------------------------------------------------
+
+    ES6编译：
+        把ES6编译成ES5  babel
+
+
+    Node:  后台开发框架  nodejs.org
+    语言 环境 平台
+    npm: node package manager 包管理
+    1.开发小规模web后台
+    2.做一些工具    比如 babel就是用node写的
+
+    npm ：会自动下载升级 自动下载依赖包
+    npm.taobao.org  国产
+    ------------------------------------------------------------------------------------------------------
+
+    babel   babeljs.io
+
+    最早作为polyfill工具
+    现在可以把ES6代码编译成Ejs.orgS5
+
+
+    cnpm init
+    --Save-dev  保存一个依赖信息到工程文件里 devDependencies
+
+    presets 预设
+    {
+        "presets": ["env"]  //env根据环境走
+    }
